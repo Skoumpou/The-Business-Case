@@ -4,11 +4,16 @@ import gr.codehub.bootcamp3.assignmentOne.SA.Interfaces.Store;
 import gr.codehub.bootcamp3.assignmentOne.SA.model.product.Product;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InventoryRetailStore implements Store {
 
     private List<Product> productList=new ArrayList<Product>();;
+    private List<Product> soldProductList=new ArrayList<Product>();;
+    Map<String, Integer> soldProducts =new HashMap<>();
+
     private double totalBuyBalance;
     private double totalSellBalance;
 
@@ -36,13 +41,16 @@ public class InventoryRetailStore implements Store {
 
     @Override
     public void sell(Product p) {
-        if(p.getAvailable() ) { //&& productList.contains(p)){
-            productList.remove(p);
-            totalSellBalance= totalSellBalance +p.getPriceWhenSell();
+        if (!productList.contains(p)){
             p.setAvailable(false);
         }
+        if(p.getAvailable() ) { //&& productList.contains(p)){
+            productList.remove(p);
+            soldProductList.add(p);
+            totalSellBalance= totalSellBalance +p.getPriceWhenSell();
+            }
         else{
-            System.out.println("The product isn't available for the store to sell it.");
+            System.out.println("The product "+p.getName()+ " isn't available for the store to sell it.");
         }
 
     }
@@ -72,6 +80,28 @@ public class InventoryRetailStore implements Store {
         System.out.println("These are all the products in the inventory.");
         productList.forEach((p) -> System.out.println(p.getName()));
     }
+
+    public void findSoldProducts(){
+        for(Product p: soldProductList){
+            String name=p.getName();
+            Integer i =soldProducts.get(name);
+            i = i ==null? 1: i+1;
+            soldProducts.put(name,i);
+            System.out.println(p.getName());
+        }
+
+    }
+
+    public void showSoldProducts(){
+        findSoldProducts();
+        for (Map.Entry<String, Integer> entry :soldProducts.entrySet()){
+            String key= entry.getKey();
+            Integer value= entry.getValue();
+            System.out.println("Product: "+key+" has been sold :" +value+" times.");
+        }
+
+    }
+
 
 
 }

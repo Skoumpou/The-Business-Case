@@ -33,38 +33,45 @@ public class TestOrder {
         Store mariaStore = new SimpleRetailStore();
         Store dismosStore = new InventoryRetailStore();
         dismosStore.buy(x1);
-        dismosStore.buy(x4);
-        dismosStore.buy(x2);
         dismosStore.buy(x1);
-        dismosStore.buy(x4);
+        dismosStore.buy(x1);
+        dismosStore.buy(x1);
+
         dismosStore.buy(x2);
+        dismosStore.buy(x2);
+        dismosStore.buy(x4);
         dismosStore.sell(x1);
-        dismosStore.sell(x4);
+        dismosStore.sell(x1);
+        dismosStore.sell(x1);
+        dismosStore.sell(x1);
         dismosStore.sell(x2);
+        dismosStore.sell(x2);
+        dismosStore.sell(x4);
         dismosStore.sell(x1);
+
         dismosStore.showInventory();
 
 
-        TransactionType t1 = TransactionType.Credit;
-        TransactionType t2 = TransactionType.Cash;
-        c.setTransactiontype(t1);
-        OrdersInventoryStore s = new OrdersInventoryStore();
-        s.createOrder(c,x1);
-        s.createOrder(c,x2);
-        c.setTransactiontype(t2);
-        s.createOrder(c,x4);
-        s.executeOrder();
-        s.executeOrder();
-
-
-        c2.setTransactiontype(t2);
-        OrdersInventoryStore s2 = new OrdersInventoryStore();
-        s2.createOrder(c2,x1);
-        s2.createOrder(c2,x2);
-        c2.setTransactiontype(t1);
-        s2.createOrder(c2,x4);
-        s2.executeOrder();
-        s2.executeOrder();
+//        TransactionType t1 = TransactionType.Credit;
+//        TransactionType t2 = TransactionType.Cash;
+//        c.setTransactiontype(t1);
+//        OrdersInventoryStore s = new OrdersInventoryStore();
+//        s.createOrder(c,x1);
+//        s.createOrder(c,x2);
+//        c.setTransactiontype(t2);
+//        s.createOrder(c,x4);
+//        s.executeOrder();
+//        s.executeOrder();
+//
+//
+//        c2.setTransactiontype(t2);
+//        OrdersInventoryStore s2 = new OrdersInventoryStore();
+//        s2.createOrder(c2,x1);
+//        s2.createOrder(c2,x2);
+//        c2.setTransactiontype(t1);
+//        s2.createOrder(c2,x4);
+//        s2.executeOrder();
+//        s2.executeOrder();
 
         int totalNumberofTransactions=0;
         double totalCostofPurchases=0;
@@ -78,10 +85,12 @@ public class TestOrder {
             totalNumberofTransactions= totalNumberofTransactions+ i.totaltrans();
             totalCostofPurchases= totalCostofPurchases + i.getTotalCreditPurchases()+i.getTotalCreditPurchases();
         }
+//
+//        System.out.println("The total number of transactions for all customers is "+totalNumberofTransactions+ " and their total cost of all purchases is "+totalCostofPurchases+"€.");
+//
+//        System.out.println("The total nuber of Sales for the Store is " +dismosStore.getTotalSellBalance()+ "€ and total number of buys "+dismosStore.getTotalBuyBalance()+"€.");
 
-        System.out.println("The total number of transactions for all customers is "+totalNumberofTransactions+ " and their total cost of all purchases is "+totalCostofPurchases+"€.");
-
-        System.out.println("The total nuber of Sales for the Store is " +dismosStore.getTotalSellBalance()+ "€ and total number of buys "+dismosStore.getTotalBuyBalance()+"€.");
+        dismosStore.showSoldProducts();
 
 
 

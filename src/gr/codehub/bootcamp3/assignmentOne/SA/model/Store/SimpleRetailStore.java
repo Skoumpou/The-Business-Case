@@ -64,4 +64,8 @@ public class SimpleRetailStore implements Store {
     public void clearOutInventory() {
         System.out.println("Simple retail store does not keep inventory of its products");
     }
+
+    public void showSoldProducts(){
+        System.out.println("This Store does not keeps inventory of its products");
+    }
 }

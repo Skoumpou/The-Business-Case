@@ -10,6 +10,7 @@ public interface Store {
     void clearOutInventory();
     double getTotalBuyBalance();
     double getTotalSellBalance();
+    void showSoldProducts();
 
 }
 
