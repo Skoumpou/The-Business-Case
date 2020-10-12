@@ -12,7 +12,7 @@ public class InventoryRetailStore implements Store {
 
     private List<Product> productList=new ArrayList<Product>();;
     private List<Product> soldProductList=new ArrayList<Product>();;
-    Map<String, Integer> soldProducts =new HashMap<>();
+    Map<String, List<Object>> soldProducts =new HashMap<>();
 
     private double totalBuyBalance;
     private double totalSellBalance;
@@ -84,20 +84,50 @@ public class InventoryRetailStore implements Store {
     public void findSoldProducts(){
         for(Product p: soldProductList){
             String name=p.getName();
-            Integer i =soldProducts.get(name);
-            i = i ==null? 1: i+1;
-            soldProducts.put(name,i);
-            System.out.println(p.getName());
+            Integer i;
+            Double totalPrice;
+            if (soldProducts.get(name)== null){
+                i=1;
+                totalPrice = (Double)p.getPriceWhenSell();
+                List<Object> lst=new ArrayList<Object>();;
+                lst.add(i);
+                lst.add(totalPrice);
+                soldProducts.put(name,lst);
+
+            }else{
+                List<Object> lst=new ArrayList<Object>();;
+                lst=soldProducts.get(name);
+                Object value=lst.get(0);
+                Object t =lst.get(1);
+                totalPrice= (Double)t;
+                i= (Integer)value;
+                i= i+1;
+                totalPrice= totalPrice + p.getPriceWhenSell();
+                lst.set(0,i);
+                lst.set(1,totalPrice);
+                soldProducts.put(name,lst);
+            }
+
+
+
+            //Integer i=soldProducts.get(name);
+            //i = i ==null? 1: i+1;
+            //soldProducts.put(name,i);
+
+           // System.out.println(p.getName());
         }
 
     }
 
+
     public void showSoldProducts(){
         findSoldProducts();
-        for (Map.Entry<String, Integer> entry :soldProducts.entrySet()){
+        //for (Map.Entry<String, Integer> entry :soldProducts.entrySet()){
+        for (Map.Entry<String, List<Object>> entry :soldProducts.entrySet()){
             String key= entry.getKey();
-            Integer value= entry.getValue();
-            System.out.println("Product: "+key+" has been sold :" +value+" times.");
+            List value= entry.getValue();
+
+            System.out.println("Product: "+key+" has been sold :" +value.get(0)+" times and the total cost of sales is "+ value.get(1)+"€.");
         }
 
     }
